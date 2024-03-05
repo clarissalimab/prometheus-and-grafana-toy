@@ -1,6 +1,8 @@
-# Prometheus + Grafana toy
+# Prometheus and Grafana toy
 
-This is a toy project to play with Prometheus and Grafana.
+A toy project to test Prometheus metrics and recording rules in Grafana locally.
+
+It allows you to create fake metrics in Prometheus, record rules and visualize them in Grafana.
 
 ## How to run
 
