@@ -1,0 +1,20 @@
+version: "prometheus/v1"
+service: "web"
+slos:
+  # We allow failing (5xx and 429) 100 request every 1000 requests (90%).
+  - name: "availability"
+    objective: 90
+    description: "Common SLO based on availability for HTTP request responses."
+    labels:
+      category: availability
+    sli:
+      events:
+        error_query: sum(rate(sli:errors:rate1m{sli="availability"}[{{.window}}]))
+        total_query: sum(rate(sli:total:rate1m{sli="availability"}[{{.window}}]))
+    alerting:
+      name: "HighErrorRate"
+      labels:
+        category: "availability"
+      annotations:
+        # Overwrite default Sloth SLO alert summmary on ticket and page alerts.
+        summary: "High error rate on 'web' requests responses."

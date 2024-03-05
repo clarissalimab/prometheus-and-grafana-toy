@@ -1,0 +1,195 @@
+groups:
+- name: sloth-slo-sli-recordings-web-availability
+  rules:
+  - record: slo:sli_error:ratio_rate5m
+    expr: |
+      (sum(rate(sli:errors:rate1m{sli="availability"}[5m])))
+      /
+      (sum(rate(sli:total:rate1m{sli="availability"}[5m])))
+    labels:
+      category: availability
+      sloth_id: web-availability
+      sloth_service: web
+      sloth_slo: availability
+      sloth_window: 5m
+  - record: slo:sli_error:ratio_rate30m
+    expr: |
+      (sum(rate(sli:errors:rate1m{sli="availability"}[30m])))
+      /
+      (sum(rate(sli:total:rate1m{sli="availability"}[30m])))
+    labels:
+      category: availability
+      sloth_id: web-availability
+      sloth_service: web
+      sloth_slo: availability
+      sloth_window: 30m
+  - record: slo:sli_error:ratio_rate1h
+    expr: |
+      (sum(rate(sli:errors:rate1m{sli="availability"}[1h])))
+      /
+      (sum(rate(sli:total:rate1m{sli="availability"}[1h])))
+    labels:
+      category: availability
+      sloth_id: web-availability
+      sloth_service: web
+      sloth_slo: availability
+      sloth_window: 1h
+  - record: slo:sli_error:ratio_rate2h
+    expr: |
+      (sum(rate(sli:errors:rate1m{sli="availability"}[2h])))
+      /
+      (sum(rate(sli:total:rate1m{sli="availability"}[2h])))
+    labels:
+      category: availability
+      sloth_id: web-availability
+      sloth_service: web
+      sloth_slo: availability
+      sloth_window: 2h
+  - record: slo:sli_error:ratio_rate6h
+    expr: |
+      (sum(rate(sli:errors:rate1m{sli="availability"}[6h])))
+      /
+      (sum(rate(sli:total:rate1m{sli="availability"}[6h])))
+    labels:
+      category: availability
+      sloth_id: web-availability
+      sloth_service: web
+      sloth_slo: availability
+      sloth_window: 6h
+  - record: slo:sli_error:ratio_rate1d
+    expr: |
+      (sum(rate(sli:errors:rate1m{sli="availability"}[1d])))
+      /
+      (sum(rate(sli:total:rate1m{sli="availability"}[1d])))
+    labels:
+      category: availability
+      sloth_id: web-availability
+      sloth_service: web
+      sloth_slo: availability
+      sloth_window: 1d
+  - record: slo:sli_error:ratio_rate3d
+    expr: |
+      (sum(rate(sli:errors:rate1m{sli="availability"}[3d])))
+      /
+      (sum(rate(sli:total:rate1m{sli="availability"}[3d])))
+    labels:
+      category: availability
+      sloth_id: web-availability
+      sloth_service: web
+      sloth_slo: availability
+      sloth_window: 3d
+  - record: slo:sli_error:ratio_rate30d
+    expr: |
+      (sum(rate(sli:errors:rate1m{sli="availability"}[30d])))
+      /
+      (sum(rate(sli:total:rate1m{sli="availability"}[30d])))
+    labels:
+      category: availability
+      sloth_id: web-availability
+      sloth_service: web
+      sloth_slo: availability
+      sloth_window: 30d
+- name: sloth-slo-meta-recordings-web-availability
+  rules:
+  - record: slo:objective:ratio
+    expr: vector(0.9)
+    labels:
+      category: availability
+      sloth_id: web-availability
+      sloth_service: web
+      sloth_slo: availability
+  - record: slo:error_budget:ratio
+    expr: vector(1-0.9)
+    labels:
+      category: availability
+      sloth_id: web-availability
+      sloth_service: web
+      sloth_slo: availability
+  - record: slo:time_period:days
+    expr: vector(30)
+    labels:
+      category: availability
+      sloth_id: web-availability
+      sloth_service: web
+      sloth_slo: availability
+  - record: slo:current_burn_rate:ratio
+    expr: |
+      slo:sli_error:ratio_rate30d{sloth_id="web-availability", sloth_service="web", sloth_slo="availability"}
+      / on(sloth_id, sloth_slo, sloth_service) group_left
+      slo:error_budget:ratio{sloth_id="web-availability", sloth_service="web", sloth_slo="availability"}
+    labels:
+      category: availability
+      sloth_id: web-availability
+      sloth_service: web
+      sloth_slo: availability
+  - record: slo:period_burn_rate:ratio
+    expr: |
+      slo:sli_error:ratio_rate30d{sloth_id="web-availability", sloth_service="web", sloth_slo="availability"}
+      / on(sloth_id, sloth_slo, sloth_service) group_left
+      slo:error_budget:ratio{sloth_id="web-availability", sloth_service="web", sloth_slo="availability"}
+    labels:
+      category: availability
+      sloth_id: web-availability
+      sloth_service: web
+      sloth_slo: availability
+  - record: slo:period_error_budget_remaining:ratio
+    expr: 1 - slo:period_burn_rate:ratio{sloth_id="web-availability", sloth_service="web",
+      sloth_slo="availability"}
+    labels:
+      category: availability
+      sloth_id: web-availability
+      sloth_service: web
+      sloth_slo: availability
+  - record: sloth_slo_info
+    expr: vector(1)
+    labels:
+      category: availability
+      sloth_id: web-availability
+      sloth_mode: cli-gen-prom
+      sloth_objective: "90"
+      sloth_service: web
+      sloth_slo: availability
+      sloth_spec: prometheus/v1
+      sloth_version: a9d9dc42fb66372fb1bd2c69ca354da4ace51b65
+- name: sloth-slo-alerts-web-availability
+  rules:
+  - alert: HighErrorRate
+    expr: |
+      (
+          max(slo:sli_error:ratio_rate5m{sloth_id="web-availability", sloth_service="web", sloth_slo="availability"} > (14.4 * 0.1)) without (sloth_window)
+          and
+          max(slo:sli_error:ratio_rate1h{sloth_id="web-availability", sloth_service="web", sloth_slo="availability"} > (14.4 * 0.1)) without (sloth_window)
+      )
+      or
+      (
+          max(slo:sli_error:ratio_rate30m{sloth_id="web-availability", sloth_service="web", sloth_slo="availability"} > (6 * 0.1)) without (sloth_window)
+          and
+          max(slo:sli_error:ratio_rate6h{sloth_id="web-availability", sloth_service="web", sloth_slo="availability"} > (6 * 0.1)) without (sloth_window)
+      )
+    labels:
+      category: availability
+      sloth_severity: page
+    annotations:
+      summary: High error rate on 'web' requests responses.
+      title: (page) {{$labels.sloth_service}} {{$labels.sloth_slo}} SLO error budget
+        burn rate is too fast.
+  - alert: HighErrorRate
+    expr: |
+      (
+          max(slo:sli_error:ratio_rate2h{sloth_id="web-availability", sloth_service="web", sloth_slo="availability"} > (3 * 0.1)) without (sloth_window)
+          and
+          max(slo:sli_error:ratio_rate1d{sloth_id="web-availability", sloth_service="web", sloth_slo="availability"} > (3 * 0.1)) without (sloth_window)
+      )
+      or
+      (
+          max(slo:sli_error:ratio_rate6h{sloth_id="web-availability", sloth_service="web", sloth_slo="availability"} > (1 * 0.1)) without (sloth_window)
+          and
+          max(slo:sli_error:ratio_rate3d{sloth_id="web-availability", sloth_service="web", sloth_slo="availability"} > (1 * 0.1)) without (sloth_window)
+      )
+    labels:
+      category: availability
+      sloth_severity: ticket
+    annotations:
+      summary: High error rate on 'web' requests responses.
+      title: (ticket) {{$labels.sloth_service}} {{$labels.sloth_slo}} SLO error budget
+        burn rate is too fast.
