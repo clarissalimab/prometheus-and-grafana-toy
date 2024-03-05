@@ -1,0 +1,6 @@
+groups:
+  - name: general
+    rules:
+    - expr: |
+        sum(rate(ruby_istio_http_requests_total[1m])) by (source, service, response_code)
+      record: app:istio_http_requests_total:rate1m

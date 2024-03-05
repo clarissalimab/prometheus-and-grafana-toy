@@ -26,7 +26,10 @@ docker compose -f docker-compose.falsify.yml up --build
 
 The fake metrics are defined under `prometheus-falsify/fake_metrics.yml`. You can customize metrics following the same structure as the example.
 
+### Recording rules
+
+Recording rules are available under `prometheus/rules/`.
+
 ## Coming soon
 
-- Recording rules support
 - Support to run Sloth to generate recording rules for SLOs

@@ -1,0 +1,26 @@
+groups:
+  - name: avaliability-slis
+    rules:
+    # Error responses
+    - expr: |
+        sum(
+          app:istio_http_requests_total:rate1m{
+            source="app",
+            service="web",
+            response_code=~"(5..|429)"
+          }
+        )
+      record: sli:errors:rate1m
+      labels:
+        sli: availability
+    # Total responses
+    - expr: |
+        sum(
+          app:istio_http_requests_total:rate1m{
+            source="app",
+            service="web"
+          }
+        )
+      record: sli:total:rate1m
+      labels:
+        sli: availability
