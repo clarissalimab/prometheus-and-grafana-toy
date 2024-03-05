@@ -1,0 +1,12 @@
+version: '3'
+services:
+  falsifier:
+    build: ./prometheus-falsify
+    volumes:
+      - .:/prometheus-falsify/
+    environment:
+      - PROMETHEUS_EXPORTER_HOST=prometheus-exporter
+      - PROMETHEUS_EXPORTER_PORT=9394
+
+volumes:
+  prom_data:

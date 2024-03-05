@@ -1,0 +1,16 @@
+source 'https://rubygems.org'
+
+ruby "3.3.0"
+
+gem "rake", "~> 13.0"
+gem "prometheus_exporter"
+
+group :development, :test do
+  gem "debug"
+end
+
+group :test do
+  gem "climate_control"
+  gem "rspec", "~> 3.0"
+  gem "timecop"
+end

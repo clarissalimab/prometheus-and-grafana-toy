@@ -1,0 +1,6 @@
+example_id                                 | status | run_time        |
+------------------------------------------ | ------ | --------------- |
+./spec/false_metrics_parser_spec.rb[1:1:1] | passed | 0.00095 seconds |
+./spec/falsify_spec.rb[1:1]                | passed | 0.00452 seconds |
+./spec/falsify_spec.rb[1:2]                | passed | 0.0004 seconds  |
+./spec/metrics_spec.rb[1:1]                | passed | 0.00009 seconds |

@@ -1,0 +1,16 @@
+# frozen_string_literal: true
+
+require "logger"
+
+import "lib/falsify.rb"
+
+task :falsify do
+  log("Falsifying metrics...")
+  Falsify.call
+  log("Falsified metrics!")
+end
+
+def log(message)
+  logger = Logger.new($stdout)
+  logger.info(message)
+end

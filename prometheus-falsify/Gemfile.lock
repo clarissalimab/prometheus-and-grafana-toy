@@ -1,0 +1,56 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    climate_control (1.2.0)
+    debug (1.9.1)
+      irb (~> 1.10)
+      reline (>= 0.3.8)
+    diff-lcs (1.5.1)
+    io-console (0.7.2)
+    irb (1.11.2)
+      rdoc
+      reline (>= 0.4.2)
+    prometheus_exporter (2.1.0)
+      webrick
+    psych (5.1.2)
+      stringio
+    rake (13.1.0)
+    rdoc (6.6.2)
+      psych (>= 4.0.0)
+    reline (0.4.3)
+      io-console (~> 0.5)
+    rspec (3.13.0)
+      rspec-core (~> 3.13.0)
+      rspec-expectations (~> 3.13.0)
+      rspec-mocks (~> 3.13.0)
+    rspec-core (3.13.0)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-support (3.13.1)
+    stringio (3.1.0)
+    timecop (0.9.8)
+    webrick (1.8.1)
+
+PLATFORMS
+  arm64-darwin-23
+  ruby
+  x86_64-linux
+
+DEPENDENCIES
+  climate_control
+  debug
+  prometheus_exporter
+  rake (~> 13.0)
+  rspec (~> 3.0)
+  timecop
+
+RUBY VERSION
+   ruby 3.3.0p0
+
+BUNDLED WITH
+   2.5.3

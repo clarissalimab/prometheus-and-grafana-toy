@@ -1,0 +1,32 @@
+version: '3'
+services:
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prom_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=grafana
+    volumes:
+      - ./grafana:/etc/grafana/provisioning/datasources
+
+  prometheus-exporter:
+    build: ./prometheus-falsify
+    command: bundle exec prometheus_exporter -b 0.0.0.0 -p 9394 --histogram
+    ports:
+      - "9394:9394"
+    volumes:
+      - .:/prometheus-falsify
+
+volumes:
+  prom_data:
